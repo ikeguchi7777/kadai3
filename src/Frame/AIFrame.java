@@ -389,4 +389,9 @@ abstract class AIFrame {
 		return list.iterator();
 	}
 
+
+	//変更点
+	public String getmName(){
+		return mName;
+	}
 } // end of class definition
