@@ -145,9 +145,11 @@ public class Chunk extends ArrayList<Morpheme> {
             }
         }
         sb.append("\">\n");
-        for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
+        // 名詞のみ抽出
+        Morpheme mor = i.next();
+        if (mor.getPos().equals("名詞")) {
             sb.append("  ");
-            sb.append(i.next().toString());
+            sb.append(mor.toString());
             sb.append("\n");
         }
         sb.append(" </文節>");
