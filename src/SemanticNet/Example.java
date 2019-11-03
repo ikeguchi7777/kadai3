@@ -1,4 +1,6 @@
-import java.util.*;
+package SemanticNet;
+
+import java.util.ArrayList;
 
 /***
  * Semantic Net の使用例
@@ -15,16 +17,16 @@ public class Example {
 
 	// 太郎の専門は人工知能である．
 	sn.addLink(new Link("speciality","Taro","AI",sn));
-	
+
 	// フェラーリは車である．
 	sn.addLink(new Link("is-a","Ferrari","car",sn));
 
 	// 車はエンジンを持つ．
 	sn.addLink(new Link("has-a","car","engine",sn));
-	
+
 	// 太郎の趣味は野球である．
 	sn.addLink(new Link("hobby","Taro","baseball",sn));
-	
+
 	// 太郎はフェラーリを所有する．
 	sn.addLink(new Link("own","Taro","Ferrari",sn));
 
@@ -42,6 +44,6 @@ public class Example {
 	query.add(new Link("is-a","?y","student"));
 	query.add(new Link("hobby","?y","baseball"));
 	sn.query(query);
-    }    
+    }
 }
 

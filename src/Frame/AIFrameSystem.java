@@ -1,3 +1,4 @@
+package Frame;
 
 /*
  AIFrameSystem.java
@@ -56,7 +57,7 @@ public class AIFrameSystem {
 	}
 
 	/*
-	 * createFrame 
+	 * createFrame
 	 *  フレームを作成する
 	 *
 	 *  @param inSuperName スーパーフレームのフレーム名
@@ -76,7 +77,7 @@ public class AIFrameSystem {
 	}
 
 	/*
-	 * createFrame 
+	 * createFrame
 	 *  フレームを作成する
 	 *
 	 *  @param inSuperName スーパーフレーム
@@ -98,7 +99,7 @@ public class AIFrameSystem {
 	}
 
 	/**
-	 * readSlotValue 
+	 * readSlotValue
 	 *  スロット値を返す
 	 *
 	 *  @param inFrameName フレーム名
@@ -114,7 +115,7 @@ public class AIFrameSystem {
 	}
 
 	/**
-	 * readSlotValue 
+	 * readSlotValue
 	 *  スロット値を返す
 	 *
 	 *  @param inFrameName フレーム名
@@ -128,7 +129,7 @@ public class AIFrameSystem {
 	}
 
 	/**
-	 * readSlotValue 
+	 * readSlotValue
 	 *  スロット値を返す
 	 *
 	 *  @param inFrameName フレーム名
@@ -144,7 +145,7 @@ public class AIFrameSystem {
 	}
 
 	/**
-	 * writeSlotValue 
+	 * writeSlotValue
 	 *  スロット値を設定する．
 	 *
 	 *  @param inFrameName フレーム名
@@ -179,7 +180,7 @@ public class AIFrameSystem {
 			String inSlotName,
 			String inClassName) {
 		try {
-			AIWhenConstructedProc demonProc = (AIWhenConstructedProc) Class.forName(inClassName).newInstance();
+			AIWhenConstructedProc demonProc = (AIWhenConstructedProc) Class.forName(inClassName).getDeclaredConstructor().newInstance();
 			AIFrame frame = (AIFrame) mFrames.get(inFrameName);
 			if (frame != null)
 				frame.setWhenConstructedProc(demonProc);
@@ -272,7 +273,7 @@ public class AIFrameSystem {
 			String inSlotName,
 			String inClassName) {
 		try {
-			AIDemonProc demon = (AIDemonProc) Class.forName(inClassName).newInstance();
+			AIDemonProc demon = (AIDemonProc) Class.forName(inClassName).getDeclaredConstructor().newInstance();
 			setDemonProc(inType, inFrameName, inSlotName, demon);
 		} catch (Exception err) {
 			System.out.println(err);
