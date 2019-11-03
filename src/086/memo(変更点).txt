@@ -1,0 +1,12 @@
+変更点（SemanticNet）
+・MakeSemanticNet.java	makeSemanticNetメソッドでメンバーのセマンティックネットを生成
+			mainメソッドで生成と検索(パターン)を実行
+
+変更点(Frame)
+・MakeFrame.java		makeFrameメソッドでフレーム作成
+			mainメソッドでmakeFrameを実行
+・AIFrameSystem.java	getFrameメソッドで指定した名前のフレームを取得
+・AIFrame.java	getNameメソッドでフレームの名前を取得
+
+
+*検索機能はパターンマッチングによる実装をSemanticNetのみ
