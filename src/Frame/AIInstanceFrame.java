@@ -1,3 +1,5 @@
+package Frame;
+
 /*
  AIInstanceFrame.java
 
@@ -14,5 +16,5 @@ AIInstanceFrame(
 {
  super( inFrameSystem, inSuperFrame, inName, true );
 }
- 
+
 }
