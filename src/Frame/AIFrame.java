@@ -1,3 +1,4 @@
+package Frame;
 
 /*
  AIFrame.java
@@ -25,8 +26,14 @@ abstract class AIFrame {
 			boolean inIsInstance) {
 		mName = inName;
 		mIsInstance = inIsInstance;
-		if (inSuperFrame != null)
+		if (inSuperFrame != null) {
 			setSlotValue(getSuperSlotName(), inSuperFrame);
+			Iterator<Object> iterator = inSuperFrame.getSupers();
+			if (iterator != null)
+				for (; iterator.hasNext();)
+					addSlotValue(getSuperSlotName(), iterator.next());
+
+		}
 		evalWhenConstructedProc(inFrameSystem, this);
 	}
 
@@ -35,7 +42,7 @@ abstract class AIFrame {
 	 *  コンストラクタ
 	 */
 	AIFrame(AIFrameSystem inFrameSystem,
-			Iterator inSuperFrames,
+			Iterator<Object> inSuperFrames,
 			String inName,
 			boolean inIsInstance) {
 		mName = inName;
@@ -70,7 +77,7 @@ abstract class AIFrame {
 	void evalWhenConstructedProc(
 			AIFrameSystem inFrameSystem,
 			AIFrame inFrame) {
-		Iterator supers = getSupers();
+		Iterator<Object> supers = getSupers();
 		if (supers != null) {
 			while (supers.hasNext() == true) {
 				AIClassFrame frame = (AIClassFrame) supers.next();
@@ -93,7 +100,7 @@ abstract class AIFrame {
 	 * getSupers
 	 *  このフレームのスーパーフレームを返す
 	 */
-	public Iterator getSupers() {
+	public Iterator<Object> getSupers() {
 		return getSlotValues(getSuperSlotName());
 	}
 
@@ -122,11 +129,11 @@ abstract class AIFrame {
 	 * readSlotValues
 	 *  スロット inSlotName に格納されているスロット値を返す．
 	 */
-	public Iterator readSlotValues(
+	public Iterator<Object> readSlotValues(
 			AIFrameSystem inFrameSystem,
 			String inSlotName,
 			boolean inDefault) {
-		Iterator obj = null;
+		Iterator<Object> obj = null;
 
 		if (inDefault == false) {
 			AISlot slot = getSlot(inSlotName);
@@ -139,7 +146,7 @@ abstract class AIFrame {
 					inFrameSystem, inSlotName);
 
 		if (obj == null) {
-			Iterator supers = getSupers();
+			Iterator<Object> supers = getSupers();
 			while (supers.hasNext() == true) {
 				AIClassFrame frame = (AIClassFrame) supers.next();
 				obj = frame.getSlotValues(inSlotName);
@@ -156,18 +163,18 @@ abstract class AIFrame {
 	 * readSlotValuesWithWhenRequestedProc
 	 *  スロット inSlotName に格納されているスロット値を返す．
 	 */
-	Iterator readSlotValuesWithWhenRequestedProc(
+	Iterator<Object> readSlotValuesWithWhenRequestedProc(
 			AIFrameSystem inFrameSystem,
 			String inSlotName) {
 		return readSlotValuesWithWhenRequestedProc(
 				inFrameSystem, this, inSlotName);
 	}
 
-	protected Iterator readSlotValuesWithWhenRequestedProc(
+	protected Iterator<Object> readSlotValuesWithWhenRequestedProc(
 			AIFrameSystem inFrameSystem,
 			AIFrame inFrame,
 			String inSlotName) {
-		Iterator obj = null;
+		Iterator<Object> obj = null;
 		AISlot slot = getSlot(inSlotName);
 
 		obj = evalWhenRequestedProc(
@@ -175,7 +182,7 @@ abstract class AIFrame {
 		if (obj != null)
 			return obj;
 
-		Iterator supers = getSupers();
+		Iterator<Object> supers = getSupers();
 		if (supers != null) {
 			while (supers.hasNext() == true) {
 				AIClassFrame frame = (AIClassFrame) supers.next();
@@ -190,7 +197,7 @@ abstract class AIFrame {
 		return null;
 	}
 
-	protected Iterator evalWhenRequestedProc(
+	protected Iterator<Object> evalWhenRequestedProc(
 			AIFrameSystem inFrameSystem,
 			AIFrame inFrame,
 			AISlot inSlot,
@@ -198,7 +205,7 @@ abstract class AIFrame {
 		if (inSlot != null && inSlot.getWhenRequestedProc() != null) {
 			AIDemonProc demon = inSlot.getWhenRequestedProc();
 			if (demon != null)
-				return (Iterator) demon.eval(
+				return (Iterator<Object>) demon.eval(
 						inFrameSystem, inFrame, inSlotName, null);
 		}
 		return null;
@@ -208,22 +215,22 @@ abstract class AIFrame {
 	 * readSlotValuesWithWhenReadProc
 	 *  スロット inSlotName に格納されているスロット値を返す．
 	 */
-	Iterator readSlotValuesWithWhenReadProc(
+	Iterator<Object> readSlotValuesWithWhenReadProc(
 			AIFrameSystem inFrameSystem,
 			String inSlotName,
-			Iterator inSlotValue) {
+			Iterator<Object> inSlotValue) {
 		return readSlotValuesWithWhenReadProc(
 				inFrameSystem, this, inSlotName, inSlotValue);
 	}
 
-	protected Iterator readSlotValuesWithWhenReadProc(
+	protected Iterator<Object> readSlotValuesWithWhenReadProc(
 			AIFrameSystem inFrameSystem,
 			AIFrame inFrame,
 			String inSlotName,
-			Iterator inSlotValue) {
+			Iterator<Object> inSlotValue) {
 		AISlot slot;
 
-		Iterator supers = getSupers();
+		Iterator<Object> supers = getSupers();
 		if (supers != null) {
 			while (supers.hasNext() == true) {
 				AIClassFrame frame = (AIClassFrame) supers.next();
@@ -238,16 +245,16 @@ abstract class AIFrame {
 				slot, inSlotName, inSlotValue);
 	}
 
-	protected Iterator evalWhenReadProc(
+	protected Iterator<Object> evalWhenReadProc(
 			AIFrameSystem inFrameSystem,
 			AIFrame inFrame,
 			AISlot inSlot,
 			String inSlotName,
-			Iterator inSlotValue) {
+			Iterator<Object> inSlotValue) {
 		if (inSlot != null && inSlot.getWhenReadProc() != null) {
 			AIDemonProc demon = inSlot.getWhenReadProc();
 			if (demon != null)
-				inSlotValue = (Iterator) demon.eval(inFrameSystem, inFrame,
+				inSlotValue = (Iterator<Object>) demon.eval(inFrameSystem, inFrame,
 						inSlotName, inSlotValue);
 		}
 
@@ -278,7 +285,7 @@ abstract class AIFrame {
 			AIFrameSystem inFrameSystem,
 			String inSlotName,
 			Object inSlotValue) {
-		Iterator supers = getSupers();
+		Iterator<Object> supers = getSupers();
 		if (supers != null) {
 			while (supers.hasNext() == true) {
 				AIClassFrame frame = (AIClassFrame) supers.next();
@@ -298,13 +305,13 @@ abstract class AIFrame {
 
 	// ----------------------------------------------------------------------
 	public Object getSlotValue(String inSlotName) {
-		Iterator iter = getSlotValues(inSlotName);
+		Iterator<Object> iter = getSlotValues(inSlotName);
 		if (iter != null && iter.hasNext() == true)
 			return iter.next();
 		return null;
 	}
 
-	public Iterator getSlotValues(String inSlotName) {
+	public Iterator<Object> getSlotValues(String inSlotName) {
 		AISlot slot = getSlot(inSlotName);
 		if (slot == null)
 			return null;
@@ -373,7 +380,7 @@ abstract class AIFrame {
 	 * getFirst
 	 *  inEnum 中の最初のオブジェクトを返す
 	 */
-	public static Object getFirst(Iterator inEnum) {
+	public static Object getFirst(Iterator<Object> inEnum) {
 		if (inEnum != null && inEnum.hasNext() == true)
 			return inEnum.next();
 		return null;
@@ -383,10 +390,15 @@ abstract class AIFrame {
 	 * makeEnum
 	 *
 	 */
-	public static Iterator makeEnum(Object inObj) {
-		ArrayList list = new ArrayList();
+	public static Iterator<Object> makeEnum(Object inObj) {
+		ArrayList<Object> list = new ArrayList<>();
 		list.add(inObj);
 		return list.iterator();
+	}
+
+	@Override
+	public String toString() {
+		return mName;
 	}
 
 } // end of class definition
