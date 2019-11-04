@@ -1,156 +1,201 @@
 package Morpheme;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 文節を表すクラス
  */
 public class Chunk extends ArrayList<Morpheme> {
 
-    /**
-     * 文節番号
-     */
-    int id;
+	/**
+	 * 文節番号
+	 */
+	int id;
 
-    /**
-     * 係り先の文節
-     */
-    Chunk dependencyChunk;
+	/**
+	 * 係り先の文節
+	 */
+	Chunk dependencyChunk;
 
-    /**
-     * 係り先の文節番号
-     */
-    int dependency;
+	/**
+	 * 係り先の文節番号
+	 */
+	int dependency;
 
-    /**
-     * この文節に係る文節のリスト
-     */
-    List<Chunk> dependents;
+	/**
+	 * この文節に係る文節のリスト
+	 */
+	List<Chunk> dependents;
 
-    public Chunk() {
-        super();
-        dependents = new LinkedList<Chunk>();
-    }
+	public Chunk() {
+		super();
+		dependents = new LinkedList<Chunk>();
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setDependency(int dependency) {
-        this.dependency = dependency;
-    }
+	public void setDependency(int dependency) {
+		this.dependency = dependency;
+	}
 
-    public void setMorphemes(List<Morpheme> morphs) {
-        for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
-            remove(i.next());
-        }
-        addAll(morphs);
-    }
+	public void setMorphemes(List<Morpheme> morphs) {
+		for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
+			remove(i.next());
+		}
+		addAll(morphs);
+	}
 
-    public void addMorpheme(Morpheme morph) {
-        add(morph);
-    }
+	public void addMorpheme(Morpheme morph) {
+		add(morph);
+	}
 
-    public void addDependentChunk(Chunk chunk) {
-        dependents.add(chunk);
-    }
+	public void addDependentChunk(Chunk chunk) {
+		dependents.add(chunk);
+	}
 
-    public void setDependencyChunk(Chunk chunk) {
-        dependencyChunk = chunk;
-    }
+	public void setDependencyChunk(Chunk chunk) {
+		dependencyChunk = chunk;
+	}
 
-    /**
-     * この文節の主辞の形態素を入れ替える
-     * 
-     * @param morph セットする形態素
-     */
-    public void replaceHeadMorpheme(Morpheme morph) {
-        set(size() - 1, morph);
-    }
+	/**
+	 * この文節の主辞の形態素を入れ替える
+	 *
+	 * @param morph セットする形態素
+	 */
+	public void replaceHeadMorpheme(Morpheme morph) {
+		set(size() - 1, morph);
+	}
 
-    /**
-     * この文節の文節番号を返す
-     * 
-     * @return 文節番号
-     */
-    public int getId() {
-        return id;
-    }
+	/**
+	 * この文節の文節番号を返す
+	 *
+	 * @return 文節番号
+	 */
+	public int getId() {
+		return id;
+	}
 
-    /**
-     * この文節が係る文節のidを返す
-     * 
-     * @return この文節が係る文節のid
-     */
-    public int getDependency() {
-        return dependency;
-    }
+	/**
+	 * この文節が係る文節のidを返す
+	 *
+	 * @return この文節が係る文節のid
+	 */
+	public int getDependency() {
+		return dependency;
+	}
 
-    /**
-     * この文節が係る文節を返す
-     * 
-     * @return この文節が係る文節
-     */
-    public Chunk getDependencyChunk() {
-        return dependencyChunk;
-    }
+	/**
+	 * この文節が係る文節を返す
+	 *
+	 * @return この文節が係る文節
+	 */
+	public Chunk getDependencyChunk() {
+		return dependencyChunk;
+	}
 
-    /**
-     * この文節に係る文節のリストを返す
-     * 
-     * @return この文節に係る文節のリスト
-     */
-    public List<Chunk> getDependents() {
-        return dependents;
-    }
+	/**
+	 * この文節に係る文節のリストを返す
+	 *
+	 * @return この文節に係る文節のリスト
+	 */
+	public List<Chunk> getDependents() {
+		return dependents;
+	}
 
-    /**
-     * 主辞である最後の形態素を返す
-     * 
-     * @return 主辞である最後の形態素
-     */
-    public Morpheme getHeadMorpheme() {
-        return get(size() - 1);
-    }
+	/**
+	 * 主辞である最後の形態素を返す
+	 *
+	 * @return 主辞である最後の形態素
+	 */
+	public Morpheme getHeadMorpheme() {
+		return get(size() - 1);
+	}
 
-    /**
-     * この文節の表層文字列を返す
-     * 
-     * @return この文節の表層文字列
-     */
-    public String getSurface() {
-        StringBuffer sb = new StringBuffer();
-        for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
-            sb.append(i.next().getSurface());
-        }
-        return sb.toString();
-    }
+	/**
+	 * この文節の表層文字列を返す
+	 *
+	 * @return この文節の表層文字列
+	 */
+	public String getSurface() {
+		StringBuffer sb = new StringBuffer();
+		for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
+			sb.append(i.next().getSurface());
+		}
+		return sb.toString();
+	}
 
-    /**
-     * この文節に含まれる形態素のリストを表すXML風の文字列を返す
-     * 
-     * @return XML風の文字列
-     */
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        sb.append(" <文節 id=\"" + id);
-        sb.append("\" 係り先=\"" + dependency);
-        if (!dependents.isEmpty()) {
-            sb.append("\" 係り元=\"");
-            for (Iterator<Chunk> i = dependents.iterator(); i.hasNext();) {
-                sb.append(i.next().getId());
-                if (i.hasNext()) {
-                    sb.append(",");
-                }
-            }
-        }
-        sb.append("\">\n");
-        for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
-            sb.append("  ");
-            sb.append(i.next().toString());
-            sb.append("\n");
-        }
-        sb.append(" </文節>");
-        return sb.toString();
-    }
+	/**
+	 * この文節に含まれる形態素のリストを表すXML風の文字列を返す
+	 *
+	 * @return XML風の文字列
+	 */
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" <文節 id=\"" + id);
+		sb.append("\" 係り先=\"" + dependency);
+		if (!dependents.isEmpty()) {
+			sb.append("\" 係り元=\"");
+			for (Iterator<Chunk> i = dependents.iterator(); i.hasNext();) {
+				sb.append(i.next().getId());
+				if (i.hasNext()) {
+					sb.append(",");
+				}
+			}
+		}
+		sb.append("\">\n");
+		// 名詞のみ抽出
+		for (Iterator<Morpheme> i = iterator(); i.hasNext();) {
+			Morpheme mor = i.next();
+			//if (mor.getPos().equals("名詞")) {
+				sb.append("  ");
+				sb.append(mor.toString());
+				sb.append("\n");
+			//}
+		}
+		sb.append(" </文節>");
+		return sb.toString();
+	}
+
+	public ArrayList<Morpheme> getNouns(){
+		ArrayList<Morpheme> list = new ArrayList<Morpheme>();
+		for (Iterator<Morpheme> iterator = iterator(); iterator.hasNext();) {
+			Morpheme morpheme = iterator.next();
+			if(morpheme.getPos().equals("名詞"))
+				list.add(morpheme);
+		}
+		return list;
+	}
+	
+	public ArrayList<String> getLikeLinkLabels(){
+		ArrayList<String> list = new ArrayList<String>();
+		String verb=null;
+		for (Iterator<Morpheme> iterator = iterator(); iterator.hasNext();) {
+			Morpheme morpheme = iterator.next();
+			if(morpheme.getPos().equals("名詞")&&morpheme.NETag.equals("O")) {
+				list.add(morpheme.surface);
+				verb=null;
+				continue;
+			}
+			if(morpheme.getPos().equals("動詞")) {
+				list.add(morpheme.base);
+				verb=morpheme.surface;
+				continue;
+			}
+			if(morpheme.getPos().equals("助動詞")) {
+				if(verb==null) {
+					list.add(morpheme.base);
+					verb=morpheme.surface;
+					continue;
+				}
+				verb+=morpheme.surface;
+				list.add(verb);
+			}
+		}
+		return list;
+	}
 }

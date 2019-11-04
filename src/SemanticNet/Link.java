@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Link {
+	static ArrayList<String> labels = new ArrayList<String>();
 	String label;
 	Node tail;
 	Node head;
@@ -11,7 +12,13 @@ public class Link {
 
 	Link(String theLabel, String theTail,
 			String theHead, SemanticNet sn) {
-		label = theLabel;
+		int i=-1;
+		if((i=labels.indexOf(theLabel))!=-1)
+			label=labels.get(i);
+		else {
+			label = theLabel;
+			labels.add(label);
+		}
 		HashMap<String, Node> nodesNameTable = sn.getNodesNameTable();
 		ArrayList<Node> nodes = sn.getNodes();
 
@@ -66,5 +73,9 @@ public class Link {
 		} else {
 			return "( " + result + " )";
 		}
+	}
+
+	public static boolean LabelContains(String label) {
+		return labels.contains(label);
 	}
 }

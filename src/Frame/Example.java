@@ -31,6 +31,7 @@ public class Example {
 		CreateCharactor(fs, "人間", "マリオ", true, true, "スーパーマリオ");
 		System.out.println(fs.readSlotValue("マリオ", "武器"));
 		System.out.println(fs.readSlotValue("マリオ", "武器",true));
+		System.out.println(fs.readSlotValue("マリオ", "タイトル"));
 		/*
 		// height と weight はデフォルト値
 		System.out.println(fs.readSlotValue("tora", "height", false));
