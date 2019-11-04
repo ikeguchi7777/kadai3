@@ -280,4 +280,9 @@ public class AIFrameSystem {
 		}
 	}
 
+	//変更点
+	public AIFrame getFrame(String inFrameName){
+			return (AIFrame)mFrames.get(inFrameName);
+	}
+	
 } // end of class definition

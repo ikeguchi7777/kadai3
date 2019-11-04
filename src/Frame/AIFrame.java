@@ -396,6 +396,11 @@ abstract class AIFrame {
 		return list.iterator();
 	}
 
+
+	//変更点
+	public String getmName(){
+		return mName;
+	}
 	@Override
 	public String toString() {
 		return mName;
