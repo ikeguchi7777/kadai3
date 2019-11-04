@@ -201,26 +201,32 @@ public class SemanticNet {
 	}
 
 	public Link getLink(String label) {
-		if(!Link.LabelContains(label))
+		if (!Link.LabelContains(label))
 			return null;
 		for (Link link : links) {
-			if(link.label.equals(label))
+			if (link.label.equals(label))
 				return link;
 		}
 		return null;
 	}
 
-	public List<Link> isLink(String label,String[] keywords) {
+	public List<Link> isLink(String label, List<String> keywords) {
 		List<Link> list = new ArrayList<Link>();
-		for (Link link : links) {
-			if(label.equals(link.getLabel())) {
-				for (String key : keywords) {
-					if(key.equals(link.getHead().getName()))
-						list.add(new Link(label, key, "?x"));
-					else if(key.equals(link.getTail().getName()))
-						list.add(new Link(label, "?x", key));
+		boolean isHead = false;
+		boolean isTail = false;
+		for (String key : keywords) {
+			for (Link link : links) {
+				if (!label.equals(link.getLabel()))
+					continue;
+				if (key.equals(link.getHead().getName()) && !isHead) {
+					list.add(new Link(label, "?x", key));
+					isHead = true;
+				} else if (key.equals(link.getTail().getName()) && !isTail) {
+					list.add(new Link(label, key, "?x"));
+					isTail = true;
 				}
 			}
+			isHead = isTail = false;
 		}
 		return list;
 	}

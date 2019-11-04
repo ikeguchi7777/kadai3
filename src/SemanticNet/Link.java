@@ -2,6 +2,7 @@ package SemanticNet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Link {
 	static ArrayList<String> labels = new ArrayList<String>();
@@ -77,5 +78,15 @@ public class Link {
 
 	public static boolean LabelContains(String label) {
 		return labels.contains(label);
+	}
+	
+	public boolean HasSameWord(List<Link> links) {
+		String s1 = getHead().toString().startsWith("?")?getHead().toString():getTail().toString();
+		for (Link link : links) {
+			String s2 = link.getHead().toString().startsWith("?")?link.getHead().toString():link.getTail().toString();
+			if(s1.equals(s2))
+				return true;
+		}
+		return false;
 	}
 }

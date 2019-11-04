@@ -195,7 +195,7 @@ public class Sentence extends ArrayList<Chunk> {
 		}
 		return null;
 	}
-	
+
 	Chunk findChunkFromFirst(List<Chunk> chunks, String pos, String baseform) {
 		for (Iterator<Chunk> i = chunks.iterator(); i.hasNext();) {
 			Chunk chunk = i.next();
@@ -358,6 +358,31 @@ public class Sentence extends ArrayList<Chunk> {
 		return sentence;
 	}
 
+	public List<String> getLikeKeywords(Chunk verbChunk){
+		List<String> keyList = new ArrayList<String>();
+		String preNoun="";
+		List<Chunk> chunks = new ArrayList<Chunk>();
+		chunks.addAll(verbChunk.getDependents());
+		chunks.add(verbChunk);
+		for (Chunk chunk : chunks) {
+			for (Morpheme morpheme : chunk) {
+				if(morpheme.getPos().equals("名詞")) {
+					preNoun+=morpheme.getSurface();
+					if(morpheme.getPos(1).equals("接尾"))
+						keyList.add(preNoun);
+					else
+						keyList.add(morpheme.getSurface());
+				}
+				else if(morpheme.getPos(1).equals("連体化")) {
+					preNoun+=morpheme.getSurface();
+				}
+				else
+					preNoun="";
+			}
+		}
+		return keyList;
+	}
+
 	public enum QuestionType {
 		What, Why, Where, When, Whitch, Who, How;
 	}
@@ -370,11 +395,11 @@ public class Sentence extends ArrayList<Chunk> {
 			questionChunk = chunk;
 			this.type = type;
 		}
-		
+
 		public Chunk getChunk() {
 			return questionChunk;
 		}
-		
+
 		public QuestionType getQuestionType() {
 			return type;
 		}
