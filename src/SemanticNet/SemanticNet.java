@@ -3,6 +3,7 @@ package SemanticNet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /***
@@ -197,6 +198,31 @@ public class SemanticNet {
 		for (int i = 0; i < nodes.size(); i++) {
 			System.out.println(((Node) nodes.get(i)).toString());
 		}
+	}
+
+	public Link getLink(String label) {
+		if(!Link.LabelContains(label))
+			return null;
+		for (Link link : links) {
+			if(link.label.equals(label))
+				return link;
+		}
+		return null;
+	}
+
+	public List<Link> isLink(String label,String[] keywords) {
+		List<Link> list = new ArrayList<Link>();
+		for (Link link : links) {
+			if(label.equals(link.getLabel())) {
+				for (String key : keywords) {
+					if(key.equals(link.getHead().getName()))
+						list.add(new Link(label, key, "?x"));
+					else if(key.equals(link.getTail().getName()))
+						list.add(new Link(label, "?x", key));
+				}
+			}
+		}
+		return list;
 	}
 }
 
