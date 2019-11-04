@@ -1,23 +1,22 @@
+package Frame;
+
 /*
  AIDemonProcWriteTest.java
-  ‚·‚×‚Ä‚Ìí—Ş‚Ìƒfƒ‚ƒ“è‘±‚«‚ÌƒX[ƒp[ƒNƒ‰ƒX
+  ï¿½ï¿½ï¿½×‚Ä‚Ìï¿½Ş‚Ìƒfï¿½ï¿½ï¿½ï¿½ï¿½è‘±ï¿½ï¿½ï¿½ÌƒXï¿½[ï¿½pï¿½[ï¿½Nï¿½ï¿½ï¿½X
 */
-
-import java.util.*;
+import java.util.Iterator;
 
 class AIDemonProcWriteTest extends AIDemonProc {
 
-public
-Object eval(
- AIFrameSystem inFrameSystem,
- AIFrame inFrame,
- String inSlotName,
- Iterator inSlotValues,
- Object inOpts )
-{
- Object obj = AIFrame.getFirst( inSlotValues );
- inFrame.setSlotValue( inSlotName, "hello " + obj );
- return null;
-}
+	public Object eval(
+			AIFrameSystem inFrameSystem,
+			AIFrame inFrame,
+			String inSlotName,
+			Iterator<Object> inSlotValues,
+			Object inOpts) {
+		Object obj = AIFrame.getFirst(inSlotValues);
+		inFrame.setSlotValue(inSlotName, "hello " + obj);
+		return null;
+	}
 
 }

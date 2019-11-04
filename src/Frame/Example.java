@@ -1,3 +1,5 @@
+package Frame;
+
 /*
  Example.java
 
@@ -5,36 +7,52 @@
 
 public class Example {
 
- public static void main(String args[]) {
-  System.out.println( "Frame" );
+	public static void main(String args[]) {
+		System.out.println("Frame");
 
-  // フレームシステムの初期化
-  AIFrameSystem fs = new AIFrameSystem();
-  
-  // クラスフレーム human の生成
-  fs.createClassFrame( "human" );
-  // height スロットを設定
-  fs.writeSlotValue( "human", "height", new Integer( 160 ) );
-  // height から weight を計算するための式 weight = 0.9*(height-100) を
-  // when-requested demon として weight スロットに割り当てる  
-  fs.setWhenRequestedProc( "human", "weight", new AIDemonProcReadTest() );
+		// フレームシステムの初期化
+		AIFrameSystem fs = new AIFrameSystem();
 
-  // インスタンスフレーム tora のﾌ生成
-  fs.createInstanceFrame( "human", "tora" );
+		// クラスフレーム キャラクター の生成
+		fs.createClassFrame("キャラクター");
+		// 武器 スロットを設定
+		fs.writeSlotValue("キャラクター", "武器", Boolean.valueOf(false));
+		// クラスフレーム 人間 の生成
+		fs.createClassFrame("キャラクター", "人間");
+		// クラスフレーム 人間 の生成
+		fs.createClassFrame("キャラクター", "動物");
+		// クラスフレーム 人間 の生成
+		fs.createClassFrame("キャラクター", "その他");
+		// クラスフレーム ゲームタイトル の生成
+		fs.createClassFrame("ゲームタイトル");
+		// クラスフレーム 人間 の生成
+		fs.createInstanceFrame("ゲームタイトル", "スーパーマリオ");
 
-  // height と weight はデフォルト値
-  System.out.println( fs.readSlotValue( "tora", "height", false ) );
-  System.out.println( fs.readSlotValue( "tora", "weight", false ) );
+		CreateCharactor(fs, "人間", "マリオ", true, true, "スーパーマリオ");
+		System.out.println(fs.readSlotValue("マリオ", "武器"));
+		System.out.println(fs.readSlotValue("マリオ", "武器",true));
+		/*
+		// height と weight はデフォルト値
+		System.out.println(fs.readSlotValue("tora", "height", false));
+		System.out.println(fs.readSlotValue("tora", "weight", false));
 
-  // weight はデフォルト値
-  fs.writeSlotValue( "tora", "height", new Integer( 165 ) );
-  System.out.println( fs.readSlotValue( "tora", "height", false ) );
-  System.out.println( fs.readSlotValue( "tora", "weight", false ) );
+		// weight はデフォルト値
+		fs.writeSlotValue("tora", "height", Integer.valueOf(165));
+		System.out.println(fs.readSlotValue("tora", "height", false));
+		System.out.println(fs.readSlotValue("tora", "weight", false));
 
-  // 再びデフォルト値を表示
-  fs.writeSlotValue( "tora", "weight", new Integer( 50 ) );
-  System.out.println( fs.readSlotValue( "tora", "height", true ) );
-  System.out.println( fs.readSlotValue( "tora", "weight", true ) );
- }
- 
+		// 再びデフォルト値を表示
+		fs.writeSlotValue("tora", "weight", Integer.valueOf(50));
+		System.out.println(fs.readSlotValue("tora", "height", true));
+		System.out.println(fs.readSlotValue("tora", "weight", true));*/
+	}
+
+	public static void CreateCharactor(AIFrameSystem fs, String inSuperName, String inName, boolean haveWeapon,
+			boolean isMale, String title) {
+		fs.createInstanceFrame(inSuperName, inName);
+		fs.writeSlotValue(inName, "武器", Boolean.valueOf(haveWeapon));
+		fs.writeSlotValue(inName, "性別", Boolean.valueOf(isMale));
+		fs.writeSlotValue(inName, "タイトル", title);
+	}
+
 }

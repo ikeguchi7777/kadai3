@@ -22,7 +22,7 @@ public class Sentence extends ArrayList<Chunk> {
     static PrintWriter caboChaOut;
     static BufferedReader caboChaIn;
     static String cabochaCmd = "C:\\Program Files (x86)\\CaboCha\\bin\\cabocha.exe -f1";
-    static String encoding = "Shift-JIS";
+    static String encoding = "UTF-8";
 
     // このへんにmainメソッドを追加して下さい
     /**
@@ -94,7 +94,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 主辞の文節を返す
-     * 
+     *
      * @return 主辞の文節
      */
     public Chunk getHeadChunk() {
@@ -103,7 +103,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 指定した品詞・原型の形態素を主辞に持つ文節を探して返す
-     * 
+     *
      * @param pos      探しててる文節の主辞形態素の品詞
      * @param baseform 探している文節の主辞形態素の原型
      * @return 見つかった文節のリスト
@@ -122,7 +122,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 動作主格の文節を返す
-     * 
+     *
      * @return 動作主格の文節
      */
     public Chunk getAgentCaseChunk() {
@@ -145,7 +145,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 指定した品詞・原型の形態素を主辞に持つ文節を文節リストchunksから探して返す
-     * 
+     *
      * @param chunks   文節リスト
      * @param pos      探しててる文節の主辞形態素の品詞
      * @param baseform 探している文節の主辞形態素の原型
@@ -164,7 +164,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * この文に含まれる文節間の係り受け構造を表すXML風の文字列を返す
-     * 
+     *
      * @return XML風の文字列
      */
     public String toString() {
@@ -195,11 +195,11 @@ public class Sentence extends ArrayList<Chunk> {
     /**
      * 文に区切るためのセパレータ
      */
-    static List separators = Arrays.asList(new String[] { "。", "！", "!", "？", "?", "．", "\n" });
+    static List<String> separators = Arrays.asList(new String[] { "。", "！", "!", "？", "?", "．", "\n" });
 
     /**
      * 文に区切る
-     * 
+     *
      * @param text 複数の文を含む可能性のあるString
      * @return 区切られた文（String）のリスト
      */
@@ -227,7 +227,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 対象テキストを文に分割した上でCaboChaに渡し，解析結果を取得
-     * 
+     *
      * @param text 解析対象のテキスト
      * @return 解析結果（文のリスト）
      */
@@ -243,7 +243,7 @@ public class Sentence extends ArrayList<Chunk> {
 
     /**
      * 文を係り受け解析
-     * 
+     *
      * @param sentenceStr 日本語文の文字列
      * @return Sentenceオブジェクトのリスト
      */
