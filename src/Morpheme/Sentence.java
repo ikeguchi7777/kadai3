@@ -376,8 +376,11 @@ public class Sentence extends ArrayList<Chunk> {
 				else if(morpheme.getPos(1).equals("連体化")) {
 					preNoun+=morpheme.getSurface();
 				}
-				else
+				else {
+					if(!preNoun.equals("")&&!keyList.contains(preNoun))
+						keyList.add(preNoun);
 					preNoun="";
+				}
 			}
 		}
 		return keyList;

@@ -1,6 +1,4 @@
-//package Frame;
-//import org.atilika.kuromoji.*;
-import java.util.*;
+package Frame;
 
 class MakeFrame {
 	public static AIFrameSystem makeFrame(){
